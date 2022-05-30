@@ -69,11 +69,11 @@ function showRiders(currentTeam){
             let imgRacer = document.createElement("img");
             let hdrName = document.createElement("p");
             imgRacer.src = `/img/Riders/${teamArray[i]["image"]}`;
-            divRacer.setAttribute("id", teamArray[i]["short"])
+            imgRacer.setAttribute("id", teamArray[i]["short"])
             hdrName.textContent = teamArray[i]["name"]
             divRacer.appendChild(imgRacer);
             divRacer.appendChild(hdrName);
-            divRacer.onmouseover = function (){
+            imgRacer.onmouseover = function (){
                 showRiderDetails(teamArray, this);
             };
             divRacer.addEventListener('mouseleave', () => {
@@ -97,6 +97,8 @@ function showRiderDetails(teamArray, e){
     riderName.textContent = rider.name;
     let riderNat = document.createElement("p");
     riderNat.textContent = rider.nationality;
+    let riderAge = document.createElement("p");
+    riderAge.textContent = getAge(rider.birthdate);
 
     hdrName.textContent = "Name";
     hdrNationality.textContent = "Nationality";
@@ -109,8 +111,18 @@ function showRiderDetails(teamArray, e){
     sctDetails.appendChild(hdrNationality);
     sctDetails.appendChild(riderNat);
     sctDetails.appendChild(hdrAge);
+    sctDetails.appendChild(riderAge);
 
 
 }
 
-function getAge(birthDate)
+function getAge(birthDateString){
+    let today = new Date();
+    let birthDate = new Date(birthDateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
