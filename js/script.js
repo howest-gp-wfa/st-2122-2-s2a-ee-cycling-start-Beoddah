@@ -86,12 +86,11 @@ function showRiders(currentTeam){
 
 
 function showRiderDetails(teamArray, e){
-    let id = (e.id);
-
     let hdrName = document.createElement("h2");
     let hdrNationality = document.createElement("h2");
     let hdrAge = document.createElement("h2");
-    
+    let hdrAchievements = document.createElement("h2");
+
     let rider = teamArray.find(element => element.short == e.id);
 
     let riderName = document.createElement("p");
@@ -101,11 +100,14 @@ function showRiderDetails(teamArray, e){
     let riderAge = document.createElement("p");
     riderAge.textContent = getAge(rider.birthdate);
 
+    let riderAchievements = document.createElement("p"); 
+    
+    let riderAchievementValue = rider["achievements"];
     hdrName.textContent = "Name";
     hdrNationality.textContent = "Nationality";
     hdrAge.textContent = "Age";
     
-
+    
 
     sctDetails.appendChild(hdrName);
     sctDetails.appendChild(riderName);
@@ -113,7 +115,38 @@ function showRiderDetails(teamArray, e){
     sctDetails.appendChild(riderNat);
     sctDetails.appendChild(hdrAge);
     sctDetails.appendChild(riderAge);
+    sctDetails.appendChild(hdrAchievements);
 
+    if(typeof(riderAchievementValue) === "object"){
+        let race = document.createElement("p");
+        race.textContent = riderAchievementValue;
+        race.classList.add("achievementStyle");
+        sctDetails.appendChild(race);
+    }else if(Array.isArray(riderAchievementValue)){
+        let divRaces = document.createElement("div");
+        
+        for (let key in riderAchievementValue){
+            {
+                let container = document.createElement("div");
+                let race = document.createElement("p");
+                container.textContent = riderAchievementValue[key];
+                //container.appendChild(container);
+                divRaces.appendChild(container);
+            }
+        }
+        divRaces.array.forEach(element => {element.classList.add("achievementStyle");
+            
+        });
+        sctDetails.appendChild(divRaces);
+
+    }else{
+        let race = document.createElement("p");
+        riderAchievementValue = "No races won yet!";
+        race.textContent = riderAchievementValue;
+        race.classList.add("achievementStyleNone");
+
+        sctDetails.appendChild(race);
+    }
 
 }
 
@@ -127,3 +160,4 @@ function getAge(birthDateString){
     }
     return age;
 }
+
