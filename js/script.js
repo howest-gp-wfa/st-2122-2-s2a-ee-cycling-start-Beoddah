@@ -4,6 +4,7 @@
 let teamsData;
 let slcTeams;
 let divShirt, divRiders;
+let sctDetails;
 
 window.addEventListener('load',initialize);
 
@@ -33,6 +34,7 @@ function bindElements(){
     slcTeams = document.querySelector("#slcTeams");
     divShirt = document.querySelector("#divShirt");
     divRiders = document.querySelector("#divRiders");
+    sctDetails = document.querySelector(".details");
 }
 
 function loadSlcTeams(){
@@ -67,16 +69,48 @@ function showRiders(currentTeam){
             let imgRacer = document.createElement("img");
             let hdrName = document.createElement("p");
             imgRacer.src = `/img/Riders/${teamArray[i]["image"]}`;
-            imgRacer.setAttribute("id", teamArray[i]["short"])
+            divRacer.setAttribute("id", teamArray[i]["short"])
             hdrName.textContent = teamArray[i]["name"]
             divRacer.appendChild(imgRacer);
             divRacer.appendChild(hdrName);
+            divRacer.onmouseover = function (){
+                showRiderDetails(teamArray, this);
+            };
+            divRacer.addEventListener('mouseleave', () => {
+                sctDetails.innerHTML = "";
+            })
             divRiders.appendChild(divRacer);
-            divRacer.addEventListener('mouseover', showRiderDetails);
         }
 }
 
 
-function showRiderDetails(){
+function showRiderDetails(teamArray, e){
+    let id = (e.id);
+
+    let hdrName = document.createElement("h2");
+    let hdrNationality = document.createElement("h2");
+    let hdrAge = document.createElement("h2");
     
+    let rider = teamArray.find(element => element.short == e.id);
+
+    let riderName = document.createElement("p");
+    riderName.textContent = rider.name;
+    let riderNat = document.createElement("p");
+    riderNat.textContent = rider.nationality;
+
+    hdrName.textContent = "Name";
+    hdrNationality.textContent = "Nationality";
+    hdrAge.textContent = "Age";
+    
+
+
+    sctDetails.appendChild(hdrName);
+    sctDetails.appendChild(riderName);
+    sctDetails.appendChild(hdrNationality);
+    sctDetails.appendChild(riderNat);
+    sctDetails.appendChild(hdrAge);
+
+
 }
+
+function getAge(birthDate)
