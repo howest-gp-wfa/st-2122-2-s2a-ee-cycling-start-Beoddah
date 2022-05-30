@@ -3,6 +3,7 @@
 //global vars
 let teamsData;
 let slcTeams;
+let divShirt;
 
 window.addEventListener('load',initialize);
 
@@ -11,6 +12,7 @@ window.addEventListener('load',initialize);
 function initialize(){
     loadData();
     bindElements();
+    addEvents();
 }
 
 async function loadData() {
@@ -21,16 +23,32 @@ async function loadData() {
             .then (function(data) {
                 teamsData = data;
                 loadSlcTeams();
-                //bindElements();
+                slcTeams.selectedIndex = -1;
+
             })
         .catch(error => console.log(error));
 }
 
 function bindElements(){
     slcTeams = document.querySelector("#slcTeams");
+    divShirt = document.querySelector("#divShirt");
 }
 
 function loadSlcTeams(){
     for(let key in teamsData)
         slcTeams.add(new Option(key, key));
+}
+
+function addEvents(){
+    slcTeams.addEventListener('change', showShirt);
+}
+
+function showShirt(){
+    divShirt.innerHTML = "";
+    let imgShirt = document.createElement("img");
+    let currentTeam = slcTeams.options[slcTeams.selectedIndex].text;
+    console.log(currentTeam);
+
+    imgShirt.src = `/img/Shirts/${teamsData[currentTeam]["shirt"]}`;
+    divShirt.appendChild(imgShirt);
 }
