@@ -2,7 +2,7 @@
 
 //global vars
 let teamsData;
-
+let slcTeams;
 
 window.addEventListener('load',initialize);
 
@@ -10,6 +10,7 @@ window.addEventListener('load',initialize);
 
 function initialize(){
     loadData();
+    bindElements();
 }
 
 async function loadData() {
@@ -19,8 +20,17 @@ async function loadData() {
         })
             .then (function(data) {
                 teamsData = data;
+                loadSlcTeams();
+                //bindElements();
             })
         .catch(error => console.log(error));
+}
 
+function bindElements(){
+    slcTeams = document.querySelector("#slcTeams");
+}
 
-}       
+function loadSlcTeams(){
+    for(let key in teamsData)
+        slcTeams.add(new Option(key, key));
+}
