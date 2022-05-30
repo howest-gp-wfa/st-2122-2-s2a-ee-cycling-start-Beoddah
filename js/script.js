@@ -69,8 +69,9 @@ function showRiders(currentTeam){
             let imgRacer = document.createElement("img");
             let hdrName = document.createElement("p");
             imgRacer.src = `/img/Riders/${teamArray[i]["image"]}`;
-            imgRacer.setAttribute("id", teamArray[i]["short"])
-            hdrName.textContent = teamArray[i]["name"]
+            imgRacer.setAttribute("id", teamArray[i]["short"]);
+            imgRacer.setAttribute("title", teamArray[i]["name"])
+            hdrName.textContent = teamArray[i]["name"];
             divRacer.appendChild(imgRacer);
             divRacer.appendChild(hdrName);
             imgRacer.onmouseover = function (){
@@ -130,7 +131,6 @@ function showRiderDetails(teamArray, e){
                 let container = document.createElement("div");
                 let race = document.createElement("p");
                 container.textContent = riderAchievementValue[key];
-                //container.appendChild(container);
                 divRaces.appendChild(container);
             }
         }
