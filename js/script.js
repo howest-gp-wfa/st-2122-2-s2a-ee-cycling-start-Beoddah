@@ -79,6 +79,7 @@ function showRiders(currentTeam){
             divRacer.addEventListener('mouseleave', () => {
                 sctDetails.innerHTML = "";
             })
+            divRacer.style.display = "inline-block";
             divRiders.appendChild(divRacer);
         }
 }
