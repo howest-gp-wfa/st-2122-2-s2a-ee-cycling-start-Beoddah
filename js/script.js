@@ -3,7 +3,7 @@
 //global vars
 let teamsData;
 let slcTeams;
-let divShirt;
+let divShirt, divRiders;
 
 window.addEventListener('load',initialize);
 
@@ -32,6 +32,7 @@ async function loadData() {
 function bindElements(){
     slcTeams = document.querySelector("#slcTeams");
     divShirt = document.querySelector("#divShirt");
+    divRiders = document.querySelector("#divRiders");
 }
 
 function loadSlcTeams(){
@@ -40,15 +41,42 @@ function loadSlcTeams(){
 }
 
 function addEvents(){
-    slcTeams.addEventListener('change', showShirt);
+    slcTeams.addEventListener('change', () =>{
+        let currentTeam = slcTeams.options[slcTeams.selectedIndex].text;
+        showShirt(currentTeam);
+        showRiders(currentTeam);
+    });
 }
 
-function showShirt(){
+function showShirt(currentTeam){
     divShirt.innerHTML = "";
     let imgShirt = document.createElement("img");
-    let currentTeam = slcTeams.options[slcTeams.selectedIndex].text;
     console.log(currentTeam);
 
     imgShirt.src = `/img/Shirts/${teamsData[currentTeam]["shirt"]}`;
     divShirt.appendChild(imgShirt);
+}
+
+function showRiders(currentTeam){
+    divRiders.innerHTML = "";
+    let teamArray = teamsData[currentTeam]["riders"];
+    
+    for(let i = 0; i < teamArray.length; i++){
+            let divRacer = document.createElement("div");
+            console.log(i["name"]);
+            let imgRacer = document.createElement("img");
+            let hdrName = document.createElement("p");
+            imgRacer.src = `/img/Riders/${teamArray[i]["image"]}`;
+            imgRacer.setAttribute("id", teamArray[i]["short"])
+            hdrName.textContent = teamArray[i]["name"]
+            divRacer.appendChild(imgRacer);
+            divRacer.appendChild(hdrName);
+            divRiders.appendChild(divRacer);
+            divRacer.addEventListener('mouseover', showRiderDetails);
+        }
+}
+
+
+function showRiderDetails(){
+    
 }
